@@ -25,29 +25,17 @@ public class BookEntity implements Serializable{
     @Column(name = "book_id")
     private Long id;
 
-    @Column(name = "book_isbn",nullable = false)
-    private String isbn;
+    @ManyToOne
+    @JoinColumn(name = "bookInfo_id",referencedColumnName = "bookInfo_id",nullable = false)
+    private BookInfoEntity bookInfo;
 
-    @Column(name = "book_title",nullable = false)
-    private String title;
-
-    @Column(name = "book_year",nullable = false)
-    private Short year;
-
-    @Column(name = "book_totalCopies",nullable = false)
-    private Short totalCopies;
-
-    @Column(name = "book_givenCopies",nullable = false)
-    private Short givenCopies;
-
-    @Column(name = "book_remainingCopies",nullable = false)
-    private Short remainingCopies;
-
-    @Column(name = "book_deleted",nullable = false)
-    private Boolean deleted;
-
-    @Column(name = "book_up",columnDefinition = "BOOLEAN",nullable = false)
-    private Boolean up;
+    @ManyToOne
+    @JoinColumn(name = "copyInfo_id",referencedColumnName = "copyInfo_id",nullable = false)
+    private CopyInfoEntity copyInfo;
+    
+    @OneToOne
+    @JoinColumn(name = "bookStatus_id",referencedColumnName = "bookStatus_id",nullable = false)
+    private BookStatusEntity bookStatus;
 
     @ManyToOne
     @JoinColumn(name = "author_id",referencedColumnName = "author_id",nullable = false)
@@ -56,6 +44,9 @@ public class BookEntity implements Serializable{
     //@ManyToOne
     //@JoinColumn(name = "publisher_id",referencedColumnName = "publisher_id",nullable = false)
     //private PublisherEntity publisher;
+
+
+
 
 
 }

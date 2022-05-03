@@ -17,19 +17,18 @@ public class BookService {
     @Transactional
     public void create(BookEntity bookDto) {
         BookEntity book = new BookEntity();
-        bookDto.setUp(true);
-        bookDto.setDeleted(false);
-        bookDto.setGivenCopies((short) 0);
-        book.setTotalCopies((short)(bookDto.getTotalCopies()+currentTotalCopies()));
-        bookDto.setRemainingCopies(remainingCopies(book.getTotalCopies()));
+        //book.setTotalCopies((short)(bookDto.getTotalCopies()+currentTotalCopies()));
+        book.setTotalCopies(bookDto.getTotalCopies());//tiene que ser automatico
+
         book.setIsbn(bookDto.getIsbn());
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
-
-        book.setGivenCopies(bookDto.getGivenCopies());
-        book.setRemainingCopies(bookDto.getRemainingCopies());
-        //seguir aca, comparar con author
+        bookDto.setGivenCopies((short) 0);
+        book.setGivenCopies(bookDto.getGivenCopies());//debe ser automatico
+        book.setRemainingCopies(bookDto.getRemainingCopies());//debe ser automatico
+        bookDto.setDeleted(false);
         book.setDeleted(bookDto.getDeleted());
+        bookDto.setUp(true);
         book.setUp(bookDto.getUp());
         book.setAuthor(bookDto.getAuthor());
         //book.setPublisher(bookDto.getPublisher());
