@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-6">
+
+                <div th:if="${success_msj}" th:text="${success_msj}" class="alert alert-success" role="alert"></div>
+
+                <form th:action="@{/book/create}" th:object="${book_object}" method="post" autocomplete="off"
+                      class="needs-validation" novalidate>
+
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{isbn}" id="isbn" class="form-control" required>
+                        <label for="isbn">ISBN</label>
+                        <div class="invalid-feedback">ISBN is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{title}" id="title" class="form-control" required>
+                        <label for="title">Title</label>
+                        <div class="invalid-feedback">Title is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{year}" id="year" class="form-control" required>
+                        <label for="year">Published Year</label>
+                        <div class="invalid-feedback">Published year is required</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{totalCopies}" id="totalCopies" class="form-control" required>
+                        <label for="totalCopies">Total entered copies </label>
+                        <div class="invalid-feedback">Total entered copies is required</div>
+                    </div>
+                    <input type="hidden" th:field="*{givenCopies}">
+                    <input type="hidden" th:field="*{remainingCopies}">
+                    <input type="hidden" th:field="*{deleted}">
+
+                    <div class="form-floating mb-3">
+                        <select th:field="*{author}" id="author" class="form-select" aria-label="Select author"
+                                required>
+                            <option value="">Select author</option>
+                            <option th:each="author : ${all_author}" th:text="${author.name}" th:value="${author.id}"></option>
+                        </select>
+                        <label for="author">Select author</label>
+                        <div class="invalid-feedback">Author is required</div>
+                        <a th:href="@{/author/form}" class="mb-3" > Add authors</a>
+                    </div>
+
+
+                    <!--<div class="form-floating mb-3">
+                        <select th:field="*{publisher}" id="publisher" class="form-select" aria-label="Select publisher"
+                                required>
+                            <option value="">Select publisher</option>
+                            <option th:each="publisher : ${all_publisher}" th:text="${publisher.name}" th:value="${publisher.id}"></option>
+                        </select>
+                        <label for="publisher">Select author</label>
+                        <div class="invalid-feedback">Author is required</div>
+                    </div>
+                    <a th:href="@{/publisher/form}"> Create new author</a> -->
+                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/validation.js}"></script>
+</body>
+
+</html>

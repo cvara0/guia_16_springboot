@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head"></head>
+
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<main>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+
+
+                <div th:if="${all_book.isEmpty()}" class="alert alert-info alert-dismissible fade show" role="alert">
+                    You must enter books.
+                    <a th:href="@{/book/form}" class="alert-link">Create books.</a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div th:unless="${all_book.isEmpty()}" class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr class="table-dark">
+                            <th>ISBN</th>
+                            <th>Title</th>
+                            <th>Year</th>
+                            <th>Total copies</th>
+                            <th>Given copies</th>
+                            <th>Remaining copies</th>
+                            <th>Author</th>
+                            <th>Publisher</th>
+                            <th>Deleted</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="book : ${all_book}">
+                             <td th:text="${book.isbn}"></td>
+                             <td th:text="${book.title}"></td>
+                             <td th:text="${book.year}"></td>
+                             <td th:text="${book.totalCopies}"></td>
+                             <td th:text="${book.givenCopies}"></td>
+                             <td th:text="${book.remainingCopies}"></td>
+                             <td th:text="${book.author.name}"></td>
+
+                             <td th:text="${book.deleted}"></td>
+                            <td th:text="${#temporals.format(person.dateOfBirth, 'dd-MM-yyyy')}"></td>
+                             <td><a class="btn btn-warning" th:href="@{/book/form/__${book.id}__}">Update</a></td>
+                             <td>
+                                 <form th:action="@{/book/delete/__${book.id}__}" method="POST">
+                                     <button class="btn btn-danger" type="submit">Delete</button>
+                                 </form>
+                             </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
