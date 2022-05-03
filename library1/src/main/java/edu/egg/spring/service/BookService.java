@@ -36,8 +36,10 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    private short calcRemaining(short total){
-        return (short) (total-given);
+    private short remainingCopies(short total){
+        return (short) (total-given);//ver video de buscar por titulo
+        //si encuentra libros prestados con el mismo titulo
+        //cantidad de prestados igual a cantidad de prestados de dicho libro
     }
 
     @Transactional(readOnly = true)
