@@ -13,7 +13,7 @@
 
                 <div th:if="${success_msj}" th:text="${success_msj}" class="alert alert-success" role="alert"></div>
 
-                <form th:action="@{/book/create}" th:object="${book_object}" method="post" autocomplete="off"
+                <form th:action="@{/book/__${action}__}" th:object="${book_object}" method="post" autocomplete="off"
                       class="needs-validation" novalidate>
 
                     <input type="hidden" th:field="*{id}">
@@ -56,6 +56,8 @@
                         <a th:href="@{/author/form}" class="mb-3" > Add authors</a>
                     </div>
 
+                    <button th:text="${action == 'create' ? 'Create' : 'Update'}" type="submit"
+                            class="btn btn-primary"></button>
 
                     <!--<div class="form-floating mb-3">
                         <select th:field="*{publisher}" id="publisher" class="form-select" aria-label="Select publisher"
@@ -67,7 +69,7 @@
                         <div class="invalid-feedback">Author is required</div>
                     </div>
                     <a th:href="@{/publisher/form}"> Create new author</a> -->
-                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+
                 </form>
             </div>
         </div>

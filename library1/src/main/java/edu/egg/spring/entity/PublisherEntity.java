@@ -17,9 +17,12 @@ public class PublisherEntity {
     @Column(name = "publisher_id")
     private Long id;
 
-    @Column(name = "publisher_name")
+    @Column(name = "publisher_name",length = 50,nullable = false)
     private String name;
 
     @Column(name = "publisher_deleted",columnDefinition = "BOOLEAN",nullable = false)
     private Boolean deleted;
+
+    @Column(name = "publisher_up",columnDefinition = "BOOLEAN",nullable = false)
+    private Boolean up;
 }

@@ -49,7 +49,7 @@ public class BookController {
     @GetMapping("/form/{id}")
     public ModelAndView getForm(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView("book-form");
-        mav.addObject("book_object", new BookEntity());
+        mav.addObject("book_object", bookService.getById(id));
         mav.addObject("all_author", authorService.getAll());
         //mav.addObject("all_publisher", publisherService.getAll());
         return mav;
@@ -67,7 +67,7 @@ public class BookController {
     public RedirectView update(BookEntity bookDto, RedirectAttributes attributes) {
         RedirectView redirect = new RedirectView("/book");
         bookService.update(bookDto);
-       attributes.addFlashAttribute("success_msj", bookDto.getTitle()+" updated successfully");
+       attributes.addFlashAttribute("success_msj", "Book updated successfully");
         return redirect;
     }
 
@@ -75,6 +75,14 @@ public class BookController {
     public RedirectView delete(@PathVariable Long id) {
         RedirectView redirect = new RedirectView("/book");
         bookService.deleteById(id);
+        return redirect;
+    }
+
+    @PostMapping("/up/{id}")
+    public RedirectView up(@PathVariable Long id) {
+
+        bookService.up(id);
+        RedirectView redirect = new RedirectView("/book");
         return redirect;
     }
 }

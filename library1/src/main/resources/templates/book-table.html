@@ -24,29 +24,40 @@
                         <tr class="table-dark">
                             <th>ISBN</th>
                             <th>Title</th>
+                            <th>Up</th>
                             <th>Year</th>
                             <th>Total copies</th>
                             <th>Given copies</th>
                             <th>Remaining copies</th>
                             <th>Author</th>
-                            <th>Publisher</th>
-                            <th>Deleted</th>
+                            <!--<th>Publisher</th>-->
+                            <th>Update</th>
+                            <th>Up/Down</th>
+                            <th>Remove</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="book : ${all_book}">
                              <td th:text="${book.isbn}"></td>
                              <td th:text="${book.title}"></td>
+                            <td th:text="${book.up}"></td>
                              <td th:text="${book.year}"></td>
                              <td th:text="${book.totalCopies}"></td>
                              <td th:text="${book.givenCopies}"></td>
                              <td th:text="${book.remainingCopies}"></td>
                              <td th:text="${book.author.name}"></td>
 
-                             <td th:text="${book.deleted}"></td>
-                            <td th:text="${#temporals.format(person.dateOfBirth, 'dd-MM-yyyy')}"></td>
-                             <td><a class="btn btn-warning" th:href="@{/book/form/__${book.id}__}">Update</a></td>
                              <td>
+                                 <a class="btn btn-warning" th:href="@{/book/form/__${book.id}__}">Update</a>
+                             </td>
+
+                            <td>
+                                <form th:action="@{/book/up/__${book.id}__}" method="POST">
+                                    <button class="btn btn-warning" type="submit">Up/Down</button>
+                                </form>
+                            </td>
+
+                            <td>
                                  <form th:action="@{/book/delete/__${book.id}__}" method="POST">
                                      <button class="btn btn-danger" type="submit">Delete</button>
                                  </form>

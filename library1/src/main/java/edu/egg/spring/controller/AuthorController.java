@@ -48,15 +48,6 @@ public class AuthorController {
         return mav;
     }
 
-    @PostMapping("/form_row/{id}")
-    public ModelAndView updateRow(@PathVariable Long id) {
-        ModelAndView mav = new ModelAndView("author-table-row");
-        mav.addObject("author_object", authorService.getById(id));
-        mav.addObject("action", "update");
-        return mav;
-    }
-
-
     //post no se ve, get si se ve, post necesita de get para ver
     @PostMapping("/create")
     public RedirectView create(AuthorEntity authorEntityDto, RedirectAttributes attributes) {
@@ -77,7 +68,7 @@ public class AuthorController {
     @PostMapping("/deleted/{id}")
     public RedirectView destroy(@PathVariable Long id) {
         RedirectView redirect = new RedirectView("/author");
-        authorService.removeById(id);
+        authorService.deleteById(id);
         return redirect;
     }
 

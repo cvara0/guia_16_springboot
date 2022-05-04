@@ -1,5 +1,6 @@
 package edu.egg.spring.service;
 
+import edu.egg.spring.entity.AuthorEntity;
 import edu.egg.spring.entity.BookEntity;
 import edu.egg.spring.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +19,14 @@ public class BookService {
     public void create(BookEntity bookDto) {
         BookEntity book = new BookEntity();
         //book.setTotalCopies((short)(bookDto.getTotalCopies()+currentTotalCopies()));
-        book.setTotalCopies(bookDto.getTotalCopies());//tiene que ser automatico
 
         book.setIsbn(bookDto.getIsbn());
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
+        book.setTotalCopies(bookDto.getTotalCopies());
         bookDto.setGivenCopies((short) 0);
         book.setGivenCopies(bookDto.getGivenCopies());//debe ser automatico
+        bookDto.setRemainingCopies((short) 1);
         book.setRemainingCopies(bookDto.getRemainingCopies());//debe ser automatico
         bookDto.setDeleted(false);
         book.setDeleted(bookDto.getDeleted());
@@ -35,7 +37,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    private short remainingCopies(short total){
+    /*private short remainingCopies(short total){
         return (short) (total-given);//ver video de buscar por titulo
         //si encuentra libros prestados con el mismo titulo
         //cantidad de prestados igual a cantidad de prestados de dicho libro
@@ -44,7 +46,7 @@ public class BookService {
     @Transactional(readOnly = true)
     private short currentTotalCopies(){
         return (short)bookRepository.findAll().size();
-    }
+    }*/
 
 
     @Transactional
@@ -54,10 +56,11 @@ public class BookService {
         book.setIsbn(bookDto.getIsbn());
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
-        book.setTitle(bookDto.getTitle());
-        book.setGivenCopies(bookDto.getGivenCopies());
+        book.setTotalCopies(bookDto.getTotalCopies());//debe ser automatico
+        book.setGivenCopies(bookDto.getGivenCopies());//debe ser automatico
         book.setRemainingCopies(bookDto.getRemainingCopies());
         book.setDeleted(bookDto.getDeleted());
+        book.setUp(bookDto.getUp());
         book.setAuthor(bookDto.getAuthor());
        // book.setPublisher(bookDto.getPublisher());
         bookRepository.save(book);
@@ -76,5 +79,12 @@ public class BookService {
     @Transactional
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void up(Long id) {
+        BookEntity book = bookRepository.findById(id).get();
+        book.setUp(!book.getUp());
+        bookRepository.save(book);
     }
 }

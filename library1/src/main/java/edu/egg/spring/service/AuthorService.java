@@ -44,25 +44,16 @@ public class AuthorService {
         return authorRepository.findAll();
     }
 
-    @Transactional
-    public void deleteById(Long id) {
-        AuthorEntity authorEntity = authorRepository.findById(id).get();
-        authorEntity.setDeleted(true);
-        authorRepository.save(authorEntity);
-    }
 
     @Transactional
-    public void removeById(Long id) {
+    public void deleteById(Long id) {
         authorRepository.deleteById(id);
     }
 
     @Transactional
     public void up(Long id) {
         AuthorEntity author = authorRepository.findById(id).get();
-        if (author.getUp())
-            author.setUp(false);
-        else
-            author.setUp(true);
+        author.setUp(!author.getUp());
         authorRepository.save(author);
     }
 }
